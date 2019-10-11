@@ -15,3 +15,5 @@ To view the slides clone this repo and `open slides/index.html`.
 ## Examples
 
 See (NOTES.sql)
+
+[Athena CLI](https://github.com/guardian/athena-cli)
