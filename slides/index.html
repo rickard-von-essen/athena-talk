@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+                <title>AWS Athena</title>
+
+                <link rel="stylesheet" href="css/reset.css">
+                <link rel="stylesheet" href="css/reveal.css">
+                <link rel="stylesheet" href="css/theme/league-mod.css">
+
+                <!-- Theme used for syntax highlighting of code -->
+                <link rel="stylesheet" href="lib/css/monokai.css">
+
+                <!-- Printing and PDF exports -->
+                <script>
+                        var link = document.createElement( 'link' );
+                        link.rel = 'stylesheet';
+                        link.type = 'text/css';
+                        link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+                        document.getElementsByTagName( 'head' )[0].appendChild( link );
+                </script>
+                <!-- script src="https://use.fontawesome.com/3b81c781aa.js"></script -->
+                <script src="https://kit.fontawesome.com/de51d4a79d.js"></script>
+        </head>
+        <body>
+    <div class="reveal">
+      <div class="slides" data-transition="fade-in" >
+        <section data-background-image="images/services-bigdata-header-2732x1536.jpg">
+          <h2>AWS Athena</h2>
+          <h1><i class="far fa-gem"></i></h1>
+          <h2>A hidden gem</h2>
+        </section>
+
+        <!-- data-background-image="images/milky-way-2695569_1920.jpg" -->
+        <section data-state="blur" data-background-image="images/terraform-background.jpg">
+          <section>
+            <h3>Rickard von Essen</h3>
+            <i class="far fa-at"></i> <a href="mailto:Rickard von Essen <rickard.von.essen@gmail.com>">rickard.von.essen@gmail.com</a> <br>
+            <br>
+            <i class="far fa-briefcase"></i> <a href="http://www.diabol.se/">Continuous Delivery and Cloud Expert - Diabol</a> <br>
+            <br>
+            <i class="fab fa-github-alt"></i> <a href="https://github.com/rickard-von-essen/">rickard-von-essen</a> <br>
+            <i class="fab fa-twitter"></i> <a href="https://twitter.com/rickrd_v_essen/">@rickard_v_essen</a> <br>
+            <i class="fab fa-keybase"></i> <a href="https://keybase.io/rickard_v_essen/">rickard_v_essen</a> <br>
+            <i class="far fa-key"></i> <i style="font-size:25px">9106 A6EA 99B6 9DAB 8C1F 4E9E E0C0 3273 8887 6CBA</i>
+
+            <img data-src="images/packer-logo.png" style="border:none;width:304px;">
+          </section>
+          <section>
+            <h1>Or..</h1>
+          </section>
+          <section>
+            <h4>Hi, my name is Rickard and I like keyboards.</h4>
+            <h3><i class="fas fa-keyboard"></i> <i class="far fa-keyboard"></i> <i class="fal fa-keyboard"></i></h3>
+            <img data-src="images/keys.jpg" style="border:none;width:500px;">
+          </section>
+        </section>
+
+
+        <section data-background-image="images/terraform-background.jpg">
+          <section>
+            <h2>AWS Athena</h2>
+            <blockquote>
+Amazon Athena is an interactive query service that makes it easy to analyze data in Amazon S3 using standard SQL. Athena is serverless, so there is no infrastructure to manage, and you pay only for the queries that you run.
+            </blockquote>
+          </section>
+          <section>
+            <h1>Features</h1>
+            <ul>
+              <li>Serverless</li>
+              <li>Standard SQL</li>
+              <li>Data is stored in S3</li>
+              <li>$5.00 per TB of data scanned (Stockholm)</li>
+            </ul>
+          </section>
+          <section>
+            <h1>Data formats</h1>
+            <ul>
+              <li>CSV</li>
+              <li>JSON</li>
+              <li>Apache Parquet</li>
+              <li>Apache ORC</li>
+              <li>And more..</li>
+            </ul>
+          </section>
+          <section>
+            <h1>Presto</h1>
+            <ul>
+              <li>Presto is a high performance, distributed SQL query engine for big data.</li>
+              <li>Developed by Facebook</li>
+              <li>To replace Apache Hive</li>
+              <li>Multi PB data warehouse</li>
+              <li>Adapted for S3 by Netflix</li>
+            </ul>
+          </section>
+        </section>
+
+        <section data-background-image="images/ufo-1951536_1920.jpg">
+          <section>
+            <h1>CREATE DATABASE</h1>
+            <pre><code class="sql">
+CREATE DATABASE demo;
+USE demo;
+            </code></pre>
+          </section>
+          <section>
+            <h1>CREATE TABLE</h1>
+            <pre><code class="sql">
+CREATE EXTERNAL TABLE table_name (column definitions)
+ROW FORMAT SERDE
+  'com.amazon.emr.hive.serde.CloudTrailSerde'
+STORED AS INPUTFORMAT
+  'com.amazon.emr.cloudtrail.CloudTrailInputFormat'
+OUTPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+  's3://s3-bucket/AWSLogs/account-id/';
+            </code></pre>
+          </section>
+          <section>
+            <h1>QUERY DATA</h1>
+            <pre><code class="sql">
+SELECT SUM(1) AS count, eventname, awsregion
+FROM "sampledb"."cloudtrail_logs"
+WHERE eventsource = 's3.amazonaws.com'
+GROUP BY eventname, awsregion
+ORDER BY count DESC
+LIMIT 10;
+            </code></pre>
+          </section>
+        </section>
+
+        <section data-background-image="images/astronaut-1784245_1920.jpg">
+          <h1>Demo..</h1>
+        </section>
+
+        <section data-background-image="images/question-mark-2492009_1920.jpg">
+          <h1>Questions</h1>
+        </section>
+    </div>
+  </div>
+
+                <script src="js/reveal.js"></script>
+
+                <script>
+                        // More info about config & dependencies:
+                        // - https://github.com/hakimel/reveal.js#configuration
+                        // - https://github.com/hakimel/reveal.js#dependencies
+                        Reveal.initialize({
+                                dependencies: [
+                                        { src: 'plugin/markdown/marked.js' },
+                                        { src: 'plugin/markdown/markdown.js' },
+                                        { src: 'plugin/notes/notes.js', async: true },
+                                        { src: 'plugin/highlight/highlight.js', async: true }
+                                ]
+                        });
+                </script>
+        </body>
+</html>
